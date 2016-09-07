@@ -1,0 +1,66 @@
+CPPFLAGS = -O1 -I ./include -Wall
+
+CC=gcc
+CFLAGS=-c -Wall
+LDFLAGS=
+		
+OBJECTS=build/main.o build/arp.o build/cbuf.o build/cstream.o build/ethernet.o \
+		build/icmp.o build/ipv4.o build/netdev.o  build/nutils.o \
+		build/tcp.o build/udp.o build/external.o  build/print_utils.o build/tuntap_if.o
+		
+EXECUTABLE=tun_main
+
+all: tun_main
+
+tun_main:$(OBJECTS)    
+	$(CC) $(LDFLAGS) $(CPPFLAGS) $(OBJECTS) -o $@
+    
+
+build/arp.o:./src/arp.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+
+build/cbuf.o:./src/cbuf.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+build/cstream.o:./src/cstream.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@	
+	
+build/ethernet.o:./src/ethernet.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+		
+build/icmp.o:./src/icmp.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+	
+build/ipv4.o:./src/ipv4.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+build/netdev.o:./src/netdev.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+
+build/nutils.o:./src/nutils.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+build/tcp.o:./src/tcp.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@						
+	
+	
+build/udp.o:./src/udp.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+build/external.o: ./arch/tap_if/external.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+build/main.o:./arch/tap_if/main.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@			
+
+build/print_utils.o:./arch/tap_if/print_utils.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@	
+	
+build/tuntap_if.o:./arch/tap_if/tuntap_if.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< -o $@
+
+
+clean:
+	rm build/*.o
+
